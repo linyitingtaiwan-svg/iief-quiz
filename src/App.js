@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { 
-  ChevronRight, 
   ChevronLeft, 
   RotateCcw, 
   CheckCircle2, 
   Stethoscope, 
   Activity,
-  Award,
   AlertCircle,
   Lightbulb
 } from 'lucide-react';
 
-const IIEFQuiz = () => {
+const App = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState(Array(5).fill(null));
   const [showResult, setShowResult] = useState(false);
@@ -137,21 +135,14 @@ const IIEFQuiz = () => {
   const diagnosis = getDiagnosis(totalScore);
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 font-sans">
-      <style>{`
-        @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
-        .progress-bar { transition: width 0.5s ease-in-out; }
-        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-      `}</style>
-
+    <div className="min-h-screen bg-slate-50 py-12 px-4 font-sans text-slate-900">
       <div className="max-w-xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500 text-white rounded-2xl shadow-lg mb-4">
             <Activity size={32} />
           </div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">IIEF-5 國際勃起功能指標</h1>
+          <h1 className="text-2xl font-black tracking-tight">IIEF-5 國際勃起功能指標</h1>
           <p className="text-slate-500 mt-2 text-sm font-medium tracking-wide uppercase">林醫師診所 · 專業自我檢測系統</p>
         </div>
 
@@ -160,7 +151,7 @@ const IIEFQuiz = () => {
             {/* Progress Bar */}
             <div className="h-2 bg-slate-100 w-full">
               <div 
-                className="h-full bg-orange-500 progress-bar" 
+                className="h-full bg-orange-500 transition-all duration-500 ease-in-out" 
                 style={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
               ></div>
             </div>
@@ -172,7 +163,7 @@ const IIEFQuiz = () => {
                 </span>
               </div>
 
-              <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-8 leading-snug">
+              <h2 className="text-xl md:text-2xl font-bold mb-8 leading-snug text-slate-900">
                 {questions[currentStep].text}
               </h2>
 
@@ -201,7 +192,7 @@ const IIEFQuiz = () => {
                 <button 
                   onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
                   disabled={currentStep === 0}
-                  className={`flex items-center gap-1 font-bold text-sm transition-colors ${currentStep === 0 ? 'text-slate-300' : 'text-slate-400 hover:text-orange-500'}`}
+                  className={`flex items-center gap-1 font-bold text-sm transition-colors ${currentStep === 0 ? 'text-slate-200' : 'text-slate-400 hover:text-orange-500'}`}
                 >
                   <ChevronLeft size={18} /> 上一題
                 </button>
@@ -209,7 +200,7 @@ const IIEFQuiz = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-[32px] shadow-2xl shadow-slate-300 border border-slate-100 overflow-hidden animate-fade-in">
+          <div className="bg-white rounded-[32px] shadow-2xl shadow-slate-300 border border-slate-100 overflow-hidden">
             <div className={`p-10 text-center ${diagnosis.bg}`}>
               <p className="text-sm font-bold text-slate-500 mb-2">檢測完成 · 總得分</p>
               <div className="text-7xl font-black text-slate-900 mb-4">{totalScore}</div>
@@ -222,7 +213,7 @@ const IIEFQuiz = () => {
               <div className="space-y-8 text-slate-600">
                 {/* 醫師建議區塊 */}
                 <div className="relative p-6 rounded-3xl bg-orange-50 border border-orange-100 overflow-hidden">
-                  <div className="absolute top-0 right-0 p-3 text-orange-200">
+                  <div className="absolute top-0 right-0 p-3 text-orange-100">
                     <Lightbulb size={48} />
                   </div>
                   <div className="relative z-10">
@@ -236,8 +227,8 @@ const IIEFQuiz = () => {
                 </div>
 
                 {/* 注意事項 */}
-                <div className="flex gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <AlertCircle className="text-slate-400 flex-shrink-0" />
+                <div className="flex gap-4 p-5 bg-slate-100 rounded-2xl border border-slate-200">
+                  <AlertCircle className="text-slate-400 flex-shrink-0" size={20} />
                   <p className="text-xs text-slate-500 leading-relaxed italic">
                     註：此工具僅為初步篩檢，不能取代醫師專業診斷。檢測結果可能受當日身心狀態影響。
                   </p>
@@ -269,4 +260,4 @@ const IIEFQuiz = () => {
   );
 };
 
-export default IIEFQuiz;
+export default App;
